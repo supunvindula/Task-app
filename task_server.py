@@ -12,7 +12,6 @@ class TaskapiImpl(task_pb2_grpc.TaskapiServicer):
     def __init__(self):
         # initialise a Tasks attribute to store our tasks.
         self.tasks = task_pb2.Tasks()
-        self.removed = 0
 
     def addTask(self, request, context):
         # TODO: implement this!
