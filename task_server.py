@@ -17,20 +17,22 @@ class TaskapiImpl(task_pb2_grpc.TaskapiServicer):
         # TODO: implement this!
         index = len(self.tasks.tasks)
         print("added id: ", index,)
-        tempTask = task_pb2.Task(id=index, description=request.description)
+        if(index == 0):
+            tempTask = task_pb2.Task(id=index, description=request.description)
+        else:
+            tempid = self.tasks.tasks[index-1].id + 1
+            tempTask = task_pb2.Task(
+                id=tempid, description=request.description)
+
         self.tasks.tasks.append(tempTask)
-        # print(self.tasks.tasks)
-        # print("\n ------------------------------------------")
         return task_pb2.Id(id=tempTask.id)
 
     def delTask(self, request, context):
         # TODO: implement this!
-        # print("removed id: ", request.id)
         tempID = -1
         for i in range(len(self.tasks.tasks)):
             if(self.tasks.tasks[i].id == request.id):
                 tempID = i
-                # print("tempID: ", tempID)
                 print("removed id: ", self.tasks.tasks[i].id)
                 break
         if(tempID == -1):
